@@ -35,8 +35,10 @@ import Benevolent from './components/Benevolent.vue'
 import Evader from './components/Evader.vue'
 import 'bootstrap/dist/css/bootstrap.css'
 import 'bootstrap-vue/dist/bootstrap-vue.css'
+import store from './store/index'
 
 export default {
+  store,
   name: 'App',
   components: {
     Lightbringer,

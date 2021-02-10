@@ -48,7 +48,7 @@
                     </div>
 
                     <h2>{{getAllPoints()}}</h2>
-                      
+                    {{pointslol()}}
                     <!-- <div id="">
                       
                     </div> -->
@@ -90,6 +90,10 @@ export default {
     }
   },
   methods: {
+    pointslol() {
+      this.combinedPoints = this.$store.state.points.combinedpoints;
+      return this.combinedPoints;
+    },
     getRepairPoints() {
       this.repairPoints = Number(this.repairvalue); //Miksi tämä vaatii Number() funktion? En tiedä.
       return this.repairPoints;
