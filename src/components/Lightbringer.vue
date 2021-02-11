@@ -48,7 +48,7 @@
                     </div>
 
                     <h2>{{getAllPoints()}}</h2>
-                    {{pointslol()}}
+                    {{storePoints()}}
                     <!-- <div id="">
                       
                     </div> -->
@@ -90,12 +90,13 @@ export default {
     }
   },
   methods: {
-    pointslol() {
-      this.combinedPoints = this.$store.state.points.combinedpoints;
+    //
+    storePoints() {
+      this.combinedPoints = this.$store.state.points.combinedpoints + this.allPoints;
       return this.combinedPoints;
     },
     getRepairPoints() {
-      this.repairPoints = Number(this.repairvalue); //Miksi tämä vaatii Number() funktion? En tiedä.
+      this.repairPoints = Number(this.repairvalue); //Minkä vitun takia tämä vaatii Number() funktion, kun muut toimii ilman sitä???
       return this.repairPoints;
     },
     getGenPoints() {

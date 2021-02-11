@@ -6,7 +6,7 @@ Vue.use(Vuex);
 export default new Vuex.Store({
     state: {
         points: {
-            combinedpoints: 666
+            combinedpoints: 0
         }
     }
 });
