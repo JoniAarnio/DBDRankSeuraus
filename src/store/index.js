@@ -6,7 +6,11 @@ Vue.use(Vuex);
 export default new Vuex.Store({
     state: {
         points: {
-            combinedpoints: 0
+            lightbringerPoints: 0,
+            evaderPoints: 0,
+            benevolentPoints: 0,
+            unbrokenPoints: 0,
+            combinedPoints: 0
         }
     }
 });

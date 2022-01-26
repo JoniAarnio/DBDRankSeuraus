@@ -2,15 +2,17 @@
   <div>  
     <b-container class="lightbringer-container">
       <b-row>
-        <!-- <b-col> -->
+        <b-col cols="8"> 
           <b-card title="Lightbringer" no-body class="overflow-hidden" fluid border-variant="primary">
-            <b-row no-gutters>
+            <b-row>
               <b-col md="4">
-                <b-img center align-h="center" src="../assets/lightbringer.png" ></b-img>
+                <b-img center align-h="center" src="../assets/lightbringer.png" style="margin-top:10%;"></b-img>
               </b-col>
               <b-col md="8">
-                <b-card-body title="Lightbringer">
+                <!-- Tässä kolumnissa syötetään tiedot -->
+                <b-card-body>
                   <b-card-text >
+                    <h1>Lightbringer</h1><br>
                     <div id="repairs" class="border-bottom">
                       Arvioitu generaattorien yksin korjauksen määrä prosentteina. Huom. Kahdestaan tehty generaattori 0%-100% jakaa pisteet tasan.
                       <b-form-input id="repairvalue" v-model="repairvalue" type="range" min="0" max="500"></b-form-input>
@@ -46,9 +48,7 @@
                         Määrä: {{hexTotems}} <br>
                         Pisteet: {{getHexTotemPoints()}}<br><br>
                     </div>
-
-                    <h2>{{getAllPoints()}}</h2>
-                    {{storePoints()}}
+                    <br>
                     <!-- <div id="">
                       
                     </div> -->
@@ -58,7 +58,30 @@
               </b-col>
             </b-row>
           </b-card>
-        <!-- </b-col> -->
+        </b-col>
+        <b-col cols="4" >
+          <!-- Tähän kolumniin renderöidään tulokset -->
+            <div>
+              <b-card>
+                <b-card-text>
+                  <h1>Tulokset</h1>
+                  <h3 style="text-align:left;">Bronze: </h3><br>
+                  <b-progress :value="allPoints" :max="bMax" variant="dark"></b-progress>
+                  <h3 style="text-align:left;">Silver: </h3><br>
+                  <b-progress :value="allPoints" :max="sMax" variant="secondary"></b-progress>
+                  <h3 style="text-align:left;">Gold: </h3><br>
+                  <b-progress :value="allPoints" :max="gMax" variant="warning"></b-progress>
+                  <h3 style="text-align:left;">Iridescent: </h3><br>
+                  <b-progress :value="allPoints" :max="iMax" variant="danger"></b-progress>
+                  <br>
+                  <h2>{{getAllPoints()}}</h2>
+                  <br>
+                  <b-img :src="emblemRoute" width="150%"></b-img>
+                </b-card-text>
+              </b-card>
+            </div>
+            
+        </b-col>
       </b-row>
 
     </b-container>
@@ -74,25 +97,29 @@ export default {
   },
   data() {
     return {
-      repairvalue: 0,
-      repairPoints: 0,
-      gens: 0,
-      genPoints: 0,
-      gates: 0,
+      //ensimmäisenä tehty datapaska. vähän hölmösti eroteltu generaattorit ja generaattoripisteet
+      allPoints: 0, //kaikki pisteet
+      repairvalue: 0, //korjausmäärä
+      repairPoints: 0, //pisteet korjauksista
+      gens: 0, //valmistuneet generaattorit
+      genPoints: 0, //generaattori pisteet
+      gates: 0, //avatut portit
       gatePoints: 0,
       dullTotems: 0,
       dullTotemPoints: 0,
       hexTotems: 0,
       hexTotemPoints: 0,
-      emblems: [
-        {}
-      ]
+      bMax: 30,
+      sMax: 100,
+      gMax: 190,
+      iMax: 270,
+      emblemRoute: ''
     }
   },
   methods: {
     //
     storePoints() {
-      this.combinedPoints = this.$store.state.points.combinedpoints + this.allPoints;
+      this.combinedPoints = this.$store.state.points.combinedpoints;
       return this.combinedPoints;
     },
     getRepairPoints() {
@@ -117,9 +144,28 @@ export default {
     },
     getAllPoints() {
       this.allPoints = this.repairPoints + this.genPoints + this.gatePoints + this.dullTotemPoints + this.hexTotemPoints;
+
+      if (this.allPoints < 30) {
+        this.emblemRoute = require('@/assets/lightbringer_none.png')
+      } 
+      else if (this.allPoints >= 30 && this.allPoints < 100) {
+        this.emblemRoute = require('@/assets/lightbringer_bronze.png')
+      } 
+      else if (this.allPoints >= 100 && this.allPoints < 190) {
+        this.emblemRoute = require('@/assets/lightbringer_silver.png')
+      }
+      else if (this.allPoints >= 190 && this.allPoints < 270) {
+        this.emblemRoute = require('@/assets/lightbringer_gold.png')
+      }
+      else if (this.allPoints >= 270) {
+        this.emblemRoute = require('@/assets/lightbringer_iri.png')
+      }
+
+
       return this.allPoints;
     }
   }
+  
 
 }
 </script>
